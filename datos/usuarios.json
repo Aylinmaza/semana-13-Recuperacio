@@ -1,1 +1,12 @@
-[]
+[
+    {
+        "identificacion": "005",
+        "nombre": "evelyn",
+        "rol": "cliente"
+    },
+    {
+        "identificacion": "1754207486",
+        "nombre": "aylin",
+        "rol": "cliente"
+    }
+]

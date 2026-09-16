@@ -1,3 +1,4 @@
+import os
 import json
 from modelos.producto import Producto
 from modelos.usuario import Usuario
@@ -5,11 +6,15 @@ from modelos.venta import Venta
 
 class ArchivoServicio:
     def __init__(self):
-        # Definimos los nombres de los archivos JSON
+        # Carpeta donde se guardarán los archivos
+        self.base_path = "datos"
+        os.makedirs(self.base_path, exist_ok=True)
+
+        # Definimos los nombres de los archivos JSON dentro de la carpeta datos
         self.archivos = {
-            "productos": "productos.json",
-            "usuarios": "usuarios.json",
-            "ventas": "ventas.json"
+            "productos": os.path.join(self.base_path, "productos.json"),
+            "usuarios": os.path.join(self.base_path, "usuarios.json"),
+            "ventas": os.path.join(self.base_path, "ventas.json")
         }
 
     # Guardar una colección en su archivo correspondiente
