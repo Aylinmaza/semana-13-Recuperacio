@@ -1,20 +1,13 @@
-import os
 import json
 from modelos.producto import Producto
 from modelos.usuario import Usuario
-from modelos.venta import Venta
 
 class ArchivoServicio:
     def __init__(self):
-        # Carpeta donde se guardarán los archivos
-        self.base_path = "datos"
-        os.makedirs(self.base_path, exist_ok=True)
-
-        # Definimos los nombres de los archivos JSON dentro de la carpeta datos
+        # Definimos las rutas correctas de los archivos JSON dentro de la carpeta "datos"
         self.archivos = {
-            "productos": os.path.join(self.base_path, "productos.json"),
-            "usuarios": os.path.join(self.base_path, "usuarios.json"),
-            "ventas": os.path.join(self.base_path, "ventas.json")
+            "productos": "datos/productos.json",
+            "usuarios": "datos/usuarios.json"
         }
 
     # Guardar una colección en su archivo correspondiente
@@ -32,7 +25,7 @@ class ArchivoServicio:
                 datos = json.load(f)
                 return [clase.from_dict(d) for d in datos]
         except FileNotFoundError:
-            # Si el archivo no existe, devolvemos lista vacía
+            print(f"Error: el archivo {self.archivos[nombre]} no existe.")
             return []
         except json.JSONDecodeError:
             print(f"Error: el archivo {self.archivos[nombre]} contiene JSON inválido.")

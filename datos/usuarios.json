@@ -2,11 +2,13 @@
     {
         "identificacion": "005",
         "nombre": "evelyn",
-        "rol": "cliente"
+        "rol": "cliente",
+        "password": "123"
     },
     {
         "identificacion": "1754207486",
         "nombre": "aylin",
-        "rol": "cliente"
+        "rol": "cliente",
+        "password": "456"
     }
 ]

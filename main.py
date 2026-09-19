@@ -1,70 +1,31 @@
-from modelos.producto import Producto
-from modelos.usuario import Usuario
-from servicios.restaurante import Restaurante
+import tkinter as tk
+from servicios.restaurante import RestauranteServicio
+from ui.login_view import LoginView
+from ui.main_view import MainView
 
-def menu():
-    print("\n--- Restaurante App ---")
-    print("1. Registrar usuario")
-    print("2. Registrar producto")
-    print("3. Vender producto")
-    print("4. Consultar ventas por usuario")
-    print("5. Listar productos")
-    print("6. Salir")
+class App(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.title("Restaurante App")
+        self.geometry("600x400")
 
-def main():
-    restaurante = Restaurante()
+        # Servicios
+        self.servicio = RestauranteServicio()
 
-    while True:
-        menu()
-        opcion = input("Seleccione una opción: ")
+        # Vista inicial
+        self.login_view = LoginView(self, self.servicio, self.mostrar_main)
+        self.login_view.pack(fill="both", expand=True)
 
-        if opcion == "1":
-            identificacion = input("Identificación: ")
-            nombre = input("Nombre: ")
-            rol = input("Rol: ")  # tu clase Usuario requiere rol
-            usuario = Usuario(identificacion, nombre, rol)
-            restaurante.registrar_usuario(usuario)
-            print("Usuario registrado correctamente.")
+    def mostrar_main(self):
+        self.login_view.pack_forget()
+        self.main_view = MainView(self, self.servicio, self.mostrar_login)
+        self.main_view.pack(fill="both", expand=True)
 
-        elif opcion == "2":
-            codigo = input("Código: ")
-            nombre = input("Nombre: ")
-            categoria = input("Categoría: ")
-            precio = float(input("Precio: "))
-            stock = int(input("Stock: "))
-            producto = Producto(codigo, nombre, categoria, precio, stock)
-            restaurante.registrar_producto(producto)
-            print("Producto registrado correctamente.")
-
-        elif opcion == "3":
-            identificacion = input("Identificación usuario: ")
-            codigo = input("Código producto: ")
-            cantidad = int(input("Cantidad: "))
-            if restaurante.vender_producto(codigo, identificacion, cantidad):
-                print("Venta registrada correctamente.")
-            else:
-                print("No se pudo realizar la venta.")
-
-        elif opcion == "4":
-            identificacion = input("Identificación usuario: ")
-            ventas = restaurante.ventas_por_usuario(identificacion)
-            if ventas:
-                print("\n--- Ventas del usuario ---")
-                for v in ventas:
-                    producto = restaurante.buscar_producto(v.producto_codigo)
-                    print(f"Producto: {producto.nombre}, Cantidad: {v.cantidad}")
-            else:
-                print("No hay ventas registradas para este usuario.")
-
-        elif opcion == "5":
-            restaurante.listar_productos()
-
-        elif opcion == "6":
-            print("Saliendo del sistema...")
-            break
-
-        else:
-            print("Opción inválida, intente nuevamente.")
+    def mostrar_login(self):
+        self.main_view.pack_forget()
+        self.login_view = LoginView(self, self.servicio, self.mostrar_main)
+        self.login_view.pack(fill="both", expand=True)
 
 if __name__ == "__main__":
-    main()
+    app = App()
+    app.mainloop()

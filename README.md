@@ -1,48 +1,56 @@
-# RestauranteApp
+# Restaurante App
+##  para el ingreso de la interfaz grafica se utilizara como usuario la identificacion 
+## 🎯 Propósito
+Esta aplicación simula el sistema de un restaurante utilizando **Python** y **Tkinter**.  
+Permite gestionar el acceso de usuarios, visualizar productos registrados y mostrar la interfaz principal del sistema.  
+La funcionalidad de **Ventas** está identificada como pendiente para futuras versiones.
 
-Aplicación en Python para la gestión de un restaurante. Permite registrar usuarios y productos, realizar ventas y consultar información de manera interactiva desde la consola. Los datos se almacenan en archivos JSON y se optimizan las búsquedas mediante índices auxiliares en memoria.
+---
 
-## Mejoras realizadas
+## 📂 Estructura de carpetas y archivos
+restaurante_app/
+│   ├── datos/
+│   │   ├── productos.json
+│   │   └── usuarios.json
+│   ├── modelos/
+│   │   ├── __init__.py
+│   │   ├── producto.py
+│   │   └── usuario.py
+│   ├── servicios/
+│   │   ├── __init__.py
+│   │   ├── archivo_servicio.py
+│   │   └── restaurante_servicio.py
+│   ├── ui/
+│   │   ├── __init__.py
+│   │   ├── login_view.py
+│   │   └── main_view.py
+│   └── main.py
+└── README.md
+---
 
-- **Colecciones principales**: se mantienen listas (`productos`, `usuarios`, `ventas`) para recorrer y persistir la información en JSON.
-- **Índices auxiliares con diccionarios**:
-  - `productos_por_codigo` para búsquedas rápidas de productos por código.
-  - `usuarios_por_id` para búsquedas rápidas de usuarios por identificación.
-  - `ventas_por_usuario_dict` para consultar ventas de un usuario sin recorrer toda la lista.
-- **Uso de set**: `categorias_unicas` para obtener categorías únicas de productos.
-- **Sincronización automática**: al registrar, modificar o eliminar datos se actualizan tanto las listas principales como los índices auxiliares.
-- **Reconstrucción de índices**: al iniciar el programa se reconstruyen los diccionarios y sets a partir de los objetos cargados desde JSON.
+## 🔄 Flujo de la aplicación
+1. Se ejecuta `main.py`.
+2. Se muestra la **LoginView** (usuario y contraseña).
+3. El **RestauranteServicio** valida las credenciales.
+4. Si son correctas → se carga la **MainView**.
+5. En la **MainView** se pueden consultar:
+   - Usuarios registrados.
+   - Productos registrados.
+   - Ventas (pendiente).
+6. Al cerrar sesión → se regresa a la **LoginView** en la misma ventana.
 
-## Organización del proyecto
+---
 
-- `modelos/`  
-  - `Producto`: código, nombre, categoría, precio y stock.  
-  - `Usuario`: identificación, nombre y rol.  
-  - `Venta`: relación entre usuario y producto con cantidad.
+## 🖥️ Vistas implementadas
+- **LoginView**: formulario de acceso con validación de credenciales.
+- **MainView**: panel principal con opciones de usuarios y productos.
+- **Ventas**: identificada como funcionalidad pendiente.
 
-- `servicios/`  
-  - `ArchivoServicio`: manejo de persistencia en archivos JSON.  
-  - `Restaurante`: lógica principal de gestión con índices auxiliares.
+---
 
-- `main.py`  
-  Menú interactivo en consola para ejecutar las operaciones.
-
-## Ejecución
-
-1. Clonar o descargar el proyecto.
-2. Abrir una terminal en la carpeta del proyecto.
-3. Ejecutar:
-
+## ▶️ Pasos para ejecutar
+1. Clonar o descargar el repositorio.  
+2. Verificar que Python esté instalado (`python --version`).  
+3. Ubicarse en la carpeta del proyecto:  
    ```bash
-   python main.py
-## Pruebas principales realizadas
-Registrar usuario: se añade un nuevo usuario y se guarda en usuarios.json.
-
-Registrar producto: se añade un producto con código único y se guarda en productos.json.
-
-Vender producto: se descuenta stock, se registra la venta en ventas.json y se actualiza el índice ventas_por_usuario_dict.
-Consultar ventas por usuario: se muestran las ventas de un usuario directamente desde el índice auxiliar.
-
-Listar productos: se imprime la lista completa de productos registrados.
-
-Categorías únicas: se obtiene el conjunto de categorías registradas en el sistema.
+   cd Restaurante
